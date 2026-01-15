@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/app.db"
+}
+
+model Board {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  threads     Thread[]
+}
+
+model Thread {
+  id        Int      @id @default(autoincrement())
+  boardId   Int
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  posts     Post[]
+
+  @@index([boardId])
+  @@index([updatedAt])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  threadId  Int
+  number    Int
+  name      String   @default("名無しさん")
+  body      String
+  createdAt DateTime @default(now())
+  thread    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([threadId])
+  @@index([number])
+}
