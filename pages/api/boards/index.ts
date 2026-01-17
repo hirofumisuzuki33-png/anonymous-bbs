@@ -7,6 +7,10 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     try {
+      // デバッグ: 環境変数の確認
+      console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+      console.log('Environment:', process.env.NODE_ENV);
+      
       const boards = await prisma.board.findMany({
         include: {
           _count: {
@@ -21,7 +25,11 @@ export default async function handler(
       return res.status(200).json(boards);
     } catch (error) {
       console.error('Error fetching boards:', error);
-      return res.status(500).json({ error: 'Failed to fetch boards' });
+      console.error('Error details:', error instanceof Error ? error.message : 'Unknown error');
+      return res.status(500).json({ 
+        error: 'Failed to fetch boards',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      });
     }
   }
 

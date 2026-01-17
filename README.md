@@ -178,7 +178,7 @@ bbs-app/
 │   ├── _document.tsx  # HTMLドキュメント
 │   └── index.tsx      # トップページ
 ├── prisma/            # Prismaスキーマ・マイグレーション
-│   ├── schema.prisma  # データベーススキーマ
+│   ├──   # データベーススキーマ
 │   └── seed.ts        # シードデータ
 ├── public/            # 静的ファイル
 ├── styles/            # グローバルスタイル
@@ -204,6 +204,22 @@ npx prisma db seed
 # Prismaクライアントを再生成
 npx prisma generate
 ```
+
+## 🚀 Vercelへのデプロイ
+
+このアプリケーションはVercelに簡単にデプロイできます。
+
+### クイックスタート
+
+1. **Vercel Postgresデータベースを作成**
+2. **環境変数を設定** (`DATABASE_URL`, `DIRECT_URL`)
+3. **マイグレーション実行** (`npx prisma migrate deploy`)
+4. **シードデータ投入** (`npx prisma db seed`)
+5. **再デプロイ**
+
+詳細な手順は [VERCEL_SETUP.md](./VERCEL_SETUP.md) をご確認ください。
+
+---
 
 ## 🎨 最新アップデート (2026-01-15)
 
